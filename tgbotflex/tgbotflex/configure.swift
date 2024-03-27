@@ -10,7 +10,7 @@ import Vapor
 import TelegramVaporBot
 
 public func configure(_ app: Application) async throws {
-    let tgApi: String = "XXXXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
+    let tgApi: String = "XXXXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
     /// set level of debug if you needed
 //    TGBot.log.logLevel = .error
     TGBot.log.logLevel = app.logger.logLevel
