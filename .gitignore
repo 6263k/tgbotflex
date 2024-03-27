@@ -1,0 +1,28 @@
+# macOS files
+*.DS_Store
+
+# Specific user data
+**/xcuserdata
+
+# Carthage
+GoldApple/Carthage/Checkouts
+GoldApple/Carthage/Build
+
+# Build
+build
+
+# Fastlane specific
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/README.md
+fastlane/screenshots
+fastlane/test_output
+
+# AppCode
+GoldApple/.idea
+
+# Breakpoints
+*.xcbkptlist
+
+# Pods
+Pods
