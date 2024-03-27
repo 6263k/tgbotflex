@@ -15,6 +15,7 @@
 		0B78BEFD2BB46EA1001D6CAA /* routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B78BEF72BB46EA1001D6CAA /* routes.swift */; };
 		0B78BF042BB471FE001D6CAA /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 0B78BF032BB471FE001D6CAA /* Vapor */; };
 		0B78BF092BB47271001D6CAA /* TelegramVaporBot in Frameworks */ = {isa = PBXBuildFile; productRef = 0B78BF082BB47271001D6CAA /* TelegramVaporBot */; };
+		9BAD7B1F2BB4898500CF127A /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD7B1E2BB4898500CF127A /* Localizable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,7 @@
 		0B78BEF42BB46EA1001D6CAA /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0B78BEF62BB46EA1001D6CAA /* TelegramController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelegramController.swift; sourceTree = "<group>"; };
 		0B78BEF72BB46EA1001D6CAA /* routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = routes.swift; sourceTree = "<group>"; };
+		9BAD7B1E2BB4898500CF127A /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		0B78BEE62BB46E67001D6CAA /* tgbotflex */ = {
 			isa = PBXGroup;
 			children = (
+				9BAD7B1D2BB4896400CF127A /* Support */,
 				0B78BEEE2BB46EA1001D6CAA /* tgbotflex */,
 			);
 			path = tgbotflex;
@@ -111,6 +114,14 @@
 				0B78BEF62BB46EA1001D6CAA /* TelegramController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9BAD7B1D2BB4896400CF127A /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				9BAD7B1E2BB4898500CF127A /* Localizable.swift */,
+			);
+			name = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B78BEFC2BB46EA1001D6CAA /* TelegramController.swift in Sources */,
+				9BAD7B1F2BB4898500CF127A /* Localizable.swift in Sources */,
 				0B78BEF82BB46EA1001D6CAA /* DefaultBotHandlers.swift in Sources */,
 				0B78BEFD2BB46EA1001D6CAA /* routes.swift in Sources */,
 				0B78BEFB2BB46EA1001D6CAA /* main.swift in Sources */,
