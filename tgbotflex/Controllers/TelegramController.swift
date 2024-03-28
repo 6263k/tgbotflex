@@ -17,7 +17,7 @@ final class TelegramController: RouteCollection {
 
 extension TelegramController {
     func telegramWebHook(_ req: Request) async throws -> Bool {
-        let update: TGUpdate = try req.content.decode(TGUpdate.self)
+        let update = try req.content.decode(TGUpdate.self)
         return try await TGBOT.connection.dispatcher.process([update])
     }
 }

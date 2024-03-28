@@ -26,8 +26,8 @@ enum TGActionState: String {
 }
 
 final class DefaultBotHandlers {
-	let messagesStore = MessagesStore()
-	var flex: Int?
+	private let messagesStore = MessagesStore()
+	private let networkProvider = ServicesDataProvider()
 
 	func addHandlers(app: Vapor.Application, connection: TGConnectionPrtcl) async {
         await defaultBaseHandler(app: app, connection: connection)
@@ -64,21 +64,7 @@ private extension DefaultBotHandlers {
 				return
 			}
 			try await bot.sendMessage(params: TGSendMessageParams(chatId: .chat(userId), text: "Приветствуем 😁"))
-			let buttons: [[TGInlineKeyboardButton]] = [
-				[
-					TGInlineKeyboardButton(text: "💎 Telegram", callbackData: "TGDefault"),
-					TGInlineKeyboardButton(text: "💎 Telegram Premium", callbackData: "press 2")
-				],
-				[
-					TGInlineKeyboardButton(text: "💎 Instagram", callbackData: "press 1"),
-					TGInlineKeyboardButton(text: "💎 TikTok", callbackData: "press 1"),
-				],
-				[
-					TGInlineKeyboardButton(text: "💎 VK", callbackData: "press 1"),
-					TGInlineKeyboardButton(text: "💎 YouTube", callbackData: "press 1"),
-				],
-				[TGInlineKeyboardButton(text: "NOLOYALTY CLUB", callbackData: "press 1")]
-			]
+			let buttons = self.networkProvider.getNetworkButtons()
 			let keyboard = TGInlineKeyboardMarkup(inlineKeyboard: buttons)
 			let params = TGSendMessageParams(
 				chatId: .chat(userId),
@@ -160,7 +146,6 @@ private extension DefaultBotHandlers {
 		await connection.dispatcher.add(callbackHandler)
 
 		let queryHandler = TGCallbackQueryHandler(pattern: "press 2") { update, bot in
-			TGBot.log.info("press 2")
 			let params = TGAnswerCallbackQueryParams(
 				callbackQueryId: update.callbackQuery?.id ?? "0",
 				text: update.callbackQuery?.data  ?? "data not exist",
@@ -189,39 +174,14 @@ private extension DefaultBotHandlers {
 			)
 			try await bot.answerCallbackQuery(params: params)
 
-			let buttons: [[TGInlineKeyboardButton]] = [
-				[
-					TGInlineKeyboardButton(text: "💎 Telegram", callbackData: "TGDefault"),
-					TGInlineKeyboardButton(text: "💎 Telegram Premium", callbackData: "press 2")
-				],
-				[
-					TGInlineKeyboardButton(text: "💎 Instagram", callbackData: "press 1"),
-					TGInlineKeyboardButton(text: "💎 TikTok", callbackData: "press 1"),
-				],
-				[
-					TGInlineKeyboardButton(text: "💎 VK", callbackData: "press 1"),
-					TGInlineKeyboardButton(text: "💎 YouTube", callbackData: "press 1"),
-				],
-				[TGInlineKeyboardButton(text: "NOLOYALTY CLUB", callbackData: "press 1")]
-			]
-
-			if let messageId = await self.messagesStore.getMessage(userId: userId) {
-				let editParams = TGEditMessageTextParams(
-					chatId: .chat(userId),
-					messageId: messageId,
-					text: Localizable.Titles.selectNetwork,
-					replyMarkup: TGInlineKeyboardMarkup(inlineKeyboard: buttons)
-				)
-				try await bot.editMessageText(params: editParams)
-			} else {
-				let keyboard = TGInlineKeyboardMarkup(inlineKeyboard: buttons)
-				let messageParams = TGSendMessageParams(
-					chatId: .chat(userId),
-					text: Localizable.Titles.selectNetwork,
-					replyMarkup: .inlineKeyboardMarkup(keyboard)
-				)
-				try await bot.sendMessage(params: messageParams)
-			}
+			let buttons = self.networkProvider.getNetworkButtons()
+			let messageId = await self.messagesStore.getMessage(userId: userId)
+			try await bot.editMessageIfPossibleOrSendNew(
+				chatId: .chat(userId),
+				messageId: messageId,
+				text: Localizable.Titles.selectNetwork,
+				buttons: buttons
+			)
 		}
 		await connection.dispatcher.add(queryHandler)
 	}
