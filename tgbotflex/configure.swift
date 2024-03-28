@@ -15,7 +15,7 @@ public func configure(_ app: Application) async throws {
     let bot: TGBot = .init(app: app, botId: tgApi)
     await TGBOT.setConnection(try await TGLongPollingConnection(bot: bot))
     
-    await DefaultBotHandlers.addHandlers(app: app, connection: TGBOT.connection)
+    await DefaultBotHandlers().addHandlers(app: app, connection: TGBOT.connection)
     try await TGBOT.connection.start()
 
     try routes(app)
