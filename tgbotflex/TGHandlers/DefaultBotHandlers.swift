@@ -79,7 +79,7 @@ private extension DefaultBotHandlers {
 	}
 
 	private func buttonsActionHandler(app: Vapor.Application, connection: TGConnectionPrtcl) async {
-		let tgLootKeeper = TGCallbackQueryHandler(pattern: "TGDefault") { update, bot in
+		let tgLootKeeper = TGCallbackQueryHandler(pattern: "network") { update, bot in
 			TGBot.log.info("press 1")
 			guard let userId = update.callbackQuery?.from.id else {
 				return
@@ -94,73 +94,24 @@ private extension DefaultBotHandlers {
 			)
 			try await bot.answerCallbackQuery(params: params)
 
-			let buttons: [[TGInlineKeyboardButton]] = [
-				[
-					TGInlineKeyboardButton(text: "Подписчики", callbackData: "TGDefault"),
-				],
-				[
-					TGInlineKeyboardButton(text: "Просмотры", callbackData: "press 1"),
-				],
-				[
-					TGInlineKeyboardButton(text: "Реакции", callbackData: "press 1"),
-				],
-				[
-					TGInlineKeyboardButton(text: "Голоса в опрос", callbackData: "press 1")
-				],
-				[
-					TGInlineKeyboardButton(text: "<- Назад", callbackData: "backToServices")
-				]
-			]
+			// Получаем из строки "network-telegram" id социальной сети telegram
+			guard let networkId = update.callbackQuery?.data?.components(separatedBy: "-").last else { return }
 
-			if let messageId = await self.messagesStore.getMessage(userId: userId) {
-				let editParams = TGEditMessageTextParams(
-					chatId: .chat(userId),
-					messageId: messageId,
-					text: "📂 Выберите категорию",
-					replyMarkup: TGInlineKeyboardMarkup(inlineKeyboard: buttons)
-				)
-				try await bot.editMessageText(params: editParams)
-			} else {
-				let keyboard = TGInlineKeyboardMarkup(inlineKeyboard: buttons)
-				let messageParams = TGSendMessageParams(
-					chatId: .chat(userId),
-					text: "📂 Выберите категорию",
-					replyMarkup: .inlineKeyboardMarkup(keyboard)
-				)
-				try await bot.sendMessage(params: messageParams)
-			}
+			let buttons = self.networkProvider.getCategoryTypes(networkId)
+			let messageId = await self.messagesStore.getMessage(userId: userId)
+			try await bot.editMessageIfPossibleOrSendNew(
+				chatId: .chat(userId),
+				messageId: messageId,
+				text: Localizable.Titles.selectCategory,
+				buttons: buttons
+			)
 		}
 		await connection.dispatcher.add(tgLootKeeper)
-
-		let callbackHandler = TGCallbackQueryHandler(pattern: "press 1") { update, bot in
-			TGBot.log.info("press 1")
-			let params = TGAnswerCallbackQueryParams(
-				callbackQueryId: update.callbackQuery?.id ?? "0",
-				text: update.callbackQuery?.data  ?? "data not exist",
-				showAlert: nil,
-				url: nil,
-				cacheTime: nil
-			)
-			try await bot.answerCallbackQuery(params: params)
-		}
-		await connection.dispatcher.add(callbackHandler)
-
-		let queryHandler = TGCallbackQueryHandler(pattern: "press 2") { update, bot in
-			let params = TGAnswerCallbackQueryParams(
-				callbackQueryId: update.callbackQuery?.id ?? "0",
-				text: update.callbackQuery?.data  ?? "data not exist",
-				showAlert: nil,
-				url: nil,
-				cacheTime: nil
-			)
-			try await bot.answerCallbackQuery(params: params)
-		}
-		await connection.dispatcher.add(queryHandler)
 	}
 
 	// Вернуться к сервисам
 	private func backButtonsHandler(app: Vapor.Application, connection: TGConnectionPrtcl) async {
-		let queryHandler = TGCallbackQueryHandler(pattern: "backToServices") { update, bot in
+		let queryHandler = TGCallbackQueryHandler(pattern: "services") { update, bot in
 			guard let userId = update.callbackQuery?.from.id else {
 				return
 			}

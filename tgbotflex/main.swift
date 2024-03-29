@@ -5,11 +5,13 @@ var env = try Environment.detect()
 try LoggingSystem.bootstrap(from: &env)
 let eventLoop = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount * 4)
 let app = Application(env, Application.EventLoopGroupProvider.shared(eventLoop))
-HyperLikeClient.shared.setApplication(app: app)
+defer { app.shutdown() }
 
+HyperLikeClient.shared.setApplication(app: app)
+try await HyperLikeClient.shared.sendReq()
 let TGBOT = TGBotConnection()
 
-defer { app.shutdown() }
+
 try await configure(app)
 try app.run()
 

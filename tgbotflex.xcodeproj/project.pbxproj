@@ -20,6 +20,7 @@
 		9BAD7B272BB57DD500CF127A /* TGBot+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD7B262BB57DD500CF127A /* TGBot+Extensions.swift */; };
 		9BAD7B292BB5854A00CF127A /* ServicesDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD7B282BB5854A00CF127A /* ServicesDataProvider.swift */; };
 		9BAD7B2C2BB5887A00CF127A /* HyperLikeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD7B2B2BB5887A00CF127A /* HyperLikeClient.swift */; };
+		9BD3D76B2BB7707C00078AD0 /* String+Extnesions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD3D76A2BB7707C00078AD0 /* String+Extnesions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +48,7 @@
 		9BAD7B262BB57DD500CF127A /* TGBot+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TGBot+Extensions.swift"; sourceTree = "<group>"; };
 		9BAD7B282BB5854A00CF127A /* ServicesDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesDataProvider.swift; sourceTree = "<group>"; };
 		9BAD7B2B2BB5887A00CF127A /* HyperLikeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperLikeClient.swift; sourceTree = "<group>"; };
+		9BD3D76A2BB7707C00078AD0 /* String+Extnesions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extnesions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			children = (
 				0B78BEF42BB46EA1001D6CAA /* main.swift */,
 				0B78BEF72BB46EA1001D6CAA /* routes.swift */,
+				9BD3D7682BB76A0000078AD0 /* Models */,
 				9BAD7B2A2BB5886D00CF127A /* Clients */,
 				0B78BEEF2BB46EA1001D6CAA /* TGHandlers */,
 				9BAD7B202BB575C700CF127A /* DataProviders */,
@@ -148,6 +151,7 @@
 			children = (
 				9BAD7B242BB57DCB00CF127A /* TGMessageOrBool+Extensions.swift */,
 				9BAD7B262BB57DD500CF127A /* TGBot+Extensions.swift */,
+				9BD3D76A2BB7707C00078AD0 /* String+Extnesions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -158,6 +162,13 @@
 				9BAD7B2B2BB5887A00CF127A /* HyperLikeClient.swift */,
 			);
 			path = Clients;
+			sourceTree = "<group>";
+		};
+		9BD3D7682BB76A0000078AD0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +241,7 @@
 				9BAD7B292BB5854A00CF127A /* ServicesDataProvider.swift in Sources */,
 				9BAD7B252BB57DCB00CF127A /* TGMessageOrBool+Extensions.swift in Sources */,
 				0B78BEFC2BB46EA1001D6CAA /* TelegramController.swift in Sources */,
+				9BD3D76B2BB7707C00078AD0 /* String+Extnesions.swift in Sources */,
 				9BAD7B1F2BB4898500CF127A /* Localizable.swift in Sources */,
 				0B78BEF82BB46EA1001D6CAA /* DefaultBotHandlers.swift in Sources */,
 				9BAD7B272BB57DD500CF127A /* TGBot+Extensions.swift in Sources */,
